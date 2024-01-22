@@ -1,16 +1,13 @@
+# ---------------------------------------- Imports -----------------------------------------------
 from fastapi import FastAPI
+import models
+from database import engine
+from routers import blog,user
+# ---------------------------------------- Create Instance -----------------------------------------------
+app = FastAPI() 
 
-app = FastAPI()
+app.include_router(blog.router)
+app.include_router(user.router)
 
-todos = []
+models.Base.metadata.create_all(bind=engine)
 
-@app.get("/")
-
-def index():
-    return {'data': {'name': 'Kumail'}}
-
-
-@app.get("/about")
-
-def about():
-    return {'data': "About Page"}
